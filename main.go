@@ -74,6 +74,9 @@ func mainE() error {
 			return fmt.Errorf("reset repository, error: %v", err)
 		}
 	}
+	if err := run(gitCmd.Version()); err != nil {
+		return fmt.Errorf("version , error: %v", err)
+	}
 	if err := run(gitCmd.Init()); err != nil {
 		return fmt.Errorf("init repository, error: %v", err)
 	}

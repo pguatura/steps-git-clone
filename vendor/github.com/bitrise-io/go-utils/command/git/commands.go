@@ -9,6 +9,11 @@ func (g *Git) Init() *command.Model {
 	return g.command("init")
 }
 
+// Init creates an empty Git reporitory or reinitializes an existing one.
+func (g *Git) Version() *command.Model {
+	return g.command("version")
+}
+
 // Clone a repository into a new directory.
 func (g *Git) Clone(repo string) *command.Model {
 	return g.command("clone", repo, ".")
