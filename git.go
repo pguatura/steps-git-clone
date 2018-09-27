@@ -278,6 +278,11 @@ func checkout(gitCmd git.Git, arg, branch string, depth int, isTag bool) error {
 		return fmt.Errorf("Fetch failed, error: %v", err)
 	}
 
+	if branch != arg {
+		if !isTag {
+			return nil
+		}
+	}
 	if err := run(gitCmd.Checkout(arg)); err != nil {
 		if depth == 0 {
 			return fmt.Errorf("checkout failed (%s), error: %v", arg, err)
