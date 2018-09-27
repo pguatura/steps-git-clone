@@ -280,7 +280,7 @@ func checkout(gitCmd git.Git, arg, branch string, depth int, isTag bool) error {
 
 	if branch != arg {
 		if !isTag {
-			return nil
+			return run(gitCmd.Status())
 		}
 	}
 	if err := run(gitCmd.Checkout(arg)); err != nil {
