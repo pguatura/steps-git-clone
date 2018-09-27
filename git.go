@@ -268,9 +268,13 @@ func checkout(gitCmd git.Git, arg, branch string, depth int, isTag bool) error {
 		if branch == arg {
 			opts = append(opts, "origin", branch)
 		}
-		if branch != arg {
-			if !isTag {
-				opts = append(opts, "origin", ":" + arg)
+		if branch != nil {
+			if branch != "" {
+				if branch != arg {
+					if !isTag {
+						opts = append(opts, "origin", branch , arg)
+					}
+				}
 			}
 		}
 		return gitCmd.Fetch(opts...)
@@ -278,11 +282,6 @@ func checkout(gitCmd git.Git, arg, branch string, depth int, isTag bool) error {
 		return fmt.Errorf("Fetch failed, error: %v", err)
 	}
 
-	if branch != arg {
-		if !isTag {
-			return run(gitCmd.Status())
-		}
-	}
 	if err := run(gitCmd.Checkout(arg)); err != nil {
 		if depth == 0 {
 			return fmt.Errorf("checkout failed (%s), error: %v", arg, err)
